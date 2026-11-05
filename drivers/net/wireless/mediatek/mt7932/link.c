@@ -822,8 +822,13 @@ int mt_connect(struct wiphy *wiphy, struct net_device *netdev,
 	if (!params->ssid_len || params->ssid_len > 32 ||
 	    (params->bssid && !is_valid_ether_addr(params->bssid)))
 		ret = -EINVAL;
-	else if (auth < 0)
+	else if (auth < 0) {
+		dev_warn_ratelimited(&m->pdev->dev,
+			"CONNECT_UNSUPPORTED_SECURITY: AKM=%08x status=%d; supported modes are OPEN, WPA2-PSK, SAE and OWE; enterprise authentication is not implemented\n",
+			params->crypto.n_akm_suites ? params->crypto.akm_suites[0] : 0,
+			auth);
 		ret = auth;
+	}
 	/* The driver can't reassociate. Honour iwd's roam by leaving the current
 	 * AP and joining the requested one: the worker reports the end of this
 	 * move through the connect result, so cfg80211 and iwd see one roam. A
