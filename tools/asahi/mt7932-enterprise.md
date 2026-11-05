@@ -4,6 +4,11 @@ Status: **not implemented; not an eduroam fix**. This branch adds a diagnostic
 for rejected security requests and prepares a reproducible external-module build.
 It does not enable enterprise authentication or change security admission.
 
+Initial read-only investigation of the owner's original macOS driver is recorded
+in [mt7932-enterprise-static-notes.md](mt7932-enterprise-static-notes.md). It
+identifies the station key-update command and a version-dependent association
+payload difference, but does not establish a complete firmware interface.
+
 ## Confirmed source-level blockers
 
 At upstream revision `b798f2b0c767e3d780896cff2f57e19e412bf954`:
